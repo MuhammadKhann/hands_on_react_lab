@@ -18,7 +18,7 @@ function ProjectList({ projects }) {
   return (
     <div className="row">
       {projects.map((project) => (
-        <div key={project.id} className="cols-sm">
+        <div key={project.id} className="col-sm-12 col-md-6 col-lg-4">
           {project === projectBeingEdited ? (
             <ProjectForm
               project={project}

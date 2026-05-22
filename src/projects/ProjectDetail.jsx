@@ -3,7 +3,7 @@ import { Project } from './Project';
 export default function ProjectDetail({ project }) {
   return (
     <div className="row">
-      <div className="col-sm-6">
+      <div className="col-sm-12 col-md-8 col-lg-6">
         <div className="card large">
           <img
             className="rounded"
