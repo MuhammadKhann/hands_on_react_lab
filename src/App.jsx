@@ -1,6 +1,4 @@
-import React from 'react';
-import { MemoryRouter, Routes, Route, NavLink } fr
-om 'react-router';
+import { MemoryRouter, Routes, Route, NavLink } from 'react-router';
 import './App.css';
 import ProjectsPage from './projects/ProjectsPage';
 import ProjectPage from './projects/ProjectPage';
