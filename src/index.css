@@ -118,10 +118,13 @@ form {
 
 html,
 body,
-#root,
-.container,
-.center-page {
-  height: 100%;
+#root {
+  min-height: 100%;
+}
+
+.container {
+  min-height: 100%;
+  padding-top: 5.1875rem;
 }
 
 .center-page {

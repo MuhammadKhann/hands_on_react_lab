@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router';
+import { MemoryRouter, Routes, Route, NavLink } fr
+om 'react-router';
 import './App.css';
 import ProjectsPage from './projects/ProjectsPage';
 import ProjectPage from './projects/ProjectPage';
@@ -7,7 +8,7 @@ import HomePage from './home/HomePage';
 
 function App() {
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <header className="sticky">
         <span className="logo">
           <img src="/assets/logo-3.svg" alt="logo" width="49" height="99" />
@@ -27,7 +28,7 @@ function App() {
           <Route path="/projects/:id" element={<ProjectPage />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 }
 
