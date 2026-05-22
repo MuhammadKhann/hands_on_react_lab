@@ -1,10 +1,19 @@
-const jsonServer = require('json-server');
+import jsonServer from 'json-server';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Read db.json using standard fs to avoid import assertion syntax differences,
+// while letting Vercel's Node File Trace (NFT) statically bundle db.json.
+const db = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'db.json'), 'utf-8')
+);
+
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
-
-// Require db.json directly so Vercel's bundler automatically includes it,
-// and pass it as an object to run json-server entirely in-memory (preventing EROFS errors).
-const db = require('./db.json');
 const router = jsonServer.router(db);
 
 server.use(middlewares);
@@ -18,4 +27,4 @@ server.use(
 
 server.use(router);
 
-module.exports = server;
+export default server;
