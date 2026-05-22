@@ -1,6 +1,10 @@
 import { Project } from './Project';
 
-const baseUrl = 'http://localhost:4000';
+const baseUrl =
+  import.meta.env.VITE_API_URL ||
+  (typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+    ? `${window.location.origin}/api`
+    : 'http://localhost:4000');
 const url = `${baseUrl}/projects`;
 
 function translateStatusToErrorMessage(status) {
