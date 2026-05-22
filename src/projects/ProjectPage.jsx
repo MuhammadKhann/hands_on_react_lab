@@ -1,92 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import ProjectList from './ProjectList';
+import { useEffect, useState } from 'react';
 import { projectAPI } from './projectAPI';
+import ProjectDetail from './ProjectDetail';
+import { useParams } from 'react-router';
 
-import { Project } from './Project';
-
-function ProjectsPage() {
-  const [projects, setProjects] = useState([]);
+function ProjectPage() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(undefined);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [project, setProject] = useState(null);
+  const [error, setError] = useState(null);
+  const params = useParams();
+  const id = Number(params.id);
 
   useEffect(() => {
-    async function loadProjects() {
-      setLoading(true);
-      try {
-        const data = await projectAPI.get(currentPage);
-        setError(null);
-        if (currentPage === 1) {
-          setProjects(data);
-        } else {
-          setProjects((projects) => [...projects, ...data]);
-        }
-      } catch (e) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadProjects();
-  }, [currentPage]);
-
-  const handleMoreClick = () => {
-    setCurrentPage((currentPage) => currentPage + 1);
-  };
-
-  const saveProject = (project) => {
+    setLoading(true);
     projectAPI
-      .put(project)
-      .then((updatedProject) => {
-        let updatedProjects = projects.map((p) => {
-          return p.id === project.id ? new Project(updatedProject) : p;
-        });
-        setProjects(updatedProjects);
+      .find(id)
+      .then((data) => {
+        setProject(data);
+        setLoading(false);
       })
       .catch((e) => {
-        setError(e.message);
+        setError(e);
+        setLoading(false);
       });
-  };
+  }, [id]);
 
   return (
-    <>
-      <h1>Projects</h1>
+    <div>
+      <>
+        <h1>Project Detail</h1>
 
-      {error && (
-        <div className="row">
-          <div className="card large error">
-            <section>
-              <p>
-                <span className="icon-alert inverse "></span>
-                {error}
-              </p>
-            </section>
+        {loading && (
+          <div className="center-page">
+            <span className="spinner primary"></span>
+            <p>Loading...</p>
           </div>
-        </div>
-      )}
+        )}
 
-      <ProjectList onSave={saveProject} projects={projects} />
-
-      {!loading && !error && (
         <div className="row">
-          <div className="col-sm-12">
-            <div className="button-group fluid">
-              <button className="button default" onClick={handleMoreClick}>
-                More...
-              </button>
+          {error && (
+            <div className="card large error">
+              <section>
+                <p>
+                  <span className="icon-alert inverse "></span> {error}
+                </p>
+              </section>
             </div>
-          </div>
+          )}
         </div>
-      )}
 
-      {loading && (
-        <div className="center-page">
-          <span className="spinner primary"></span>
-          <p>Loading...</p>
-        </div>
-      )}
-    </>
+        {project && <ProjectDetail project={project} />}
+      </>
+    </div>
   );
 }
 
-export default ProjectsPage;
+export default ProjectPage;

@@ -11,11 +11,14 @@
     "api": "json-server api/db.json --port 4000"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.100.11",
+    "@tanstack/react-query-devtools": "^5.100.11",
     "json-server": "^0.16.2",
     "mini.css": "^3.0.1",
     "prop-types": "^15.8.1",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "react-router": "^7.15.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
